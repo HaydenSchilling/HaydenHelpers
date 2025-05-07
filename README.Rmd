@@ -24,8 +24,8 @@ The goal of HaydenHelpers is to curate and make accessible custom functions I ha
 
 You can install the development version of HaydenHelpers like so:
 
-``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+```{r, include = TRUE, eval=FALSE}
+devtools::install_github("HaydenSchilling/HaydenHelpers")
 ```
 
 ## Example
