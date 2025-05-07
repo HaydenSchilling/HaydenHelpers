@@ -1,0 +1,27 @@
+Package: HaydenHelpers
+Title: Custom function by Hayden Schilling
+Version: 0.0.0.9000
+Authors@R: 
+    person("Hayden", "Schilling", , "hayden.schilling@dpi.nsw.gov.au", role = c("aut", "cre"))
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+    magrittr,
+    dplyr,
+    tidyr,
+    raster,
+    lubridate,
+    data.table,
+    lubridate,
+    progress,
+    httr2,
+    devtools,
+    stringr,
+    rWind,
+    sp,
+    purrr
+Suggests:
+    keyring
