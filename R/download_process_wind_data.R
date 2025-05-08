@@ -288,6 +288,12 @@ download_process_wind_data <- function(
     dplyr::left_join(v_dat) %>%
     dplyr::mutate(Date = ymd(str_remove(Date, pattern = "X")))
 
+  # Write combined data
+  message("Writing combined U and V data file...")
+  if(save_interim) {
+    data.table::fwrite(uv_dat, paste0(output_dir, "/Combined files/Combined U V data.csv"))
+  }
+
   # Calculate speed from vectors
   message("Calculating speed and direction...")
   sp_dir <- rWind::uv2ds(uv_dat$u, uv_dat$v)
@@ -307,12 +313,6 @@ download_process_wind_data <- function(
   uv_dat <- uv_dat %>%
     dplyr::left_join(locations_lookup, by = "Estuary")
 
-  # Write combined data
-  message("Writing final data files...")
-  if(save_interim) {
-    data.table::fwrite(uv_dat, paste0(output_dir, "/Combined files/Combined U V data.csv"))
-  }
-
   # Write final data with speed and direction
   data.table::fwrite(uv_dat, paste0(output_dir, "/Combined files/Combined U V speed direction data.csv"))
 
@@ -320,7 +320,7 @@ download_process_wind_data <- function(
   return(uv_dat)
 }
 
-## Downloads from https://dapds00.nci.org.au/thredds/catalog/ob53/output/reanalysis/AUS-11/BOM/ERA5/historical/hres/BARRA-R2/v1/day/uas/latest/catalog.html
+## Downloads from https://thredds.nci.org.au/thredds/catalog/ob53/output/reanalysis/AUS-11/BOM/ERA5/historical/hres/BARRA-R2/v1/day/uas/latest/catalog.html
 ## Check this link to see the latest date available then might need to edit the code
 
 
