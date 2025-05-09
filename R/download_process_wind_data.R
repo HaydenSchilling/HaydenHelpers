@@ -12,12 +12,6 @@
 #' @returns Dataframe containing daily wind speed and direction (going towards) for each location in the provided datafarme.
 #' @export
 #'
-#' @import lubridate dplyr stringr rWind devtools
-#' @importFrom tidyr pivot_longer crossing
-#' @importFrom data.table fwrite fread
-#' @importFrom raster extract stack t
-#' @importFrom sp SpatialPointsDataFrame CRS
-#' @importFrom utils install.packages setTxtProgressBar txtProgressBar
 #'
 #' @examples
 #' #Example usage:
@@ -151,8 +145,8 @@ download_process_wind_data <- function(
 
   year_month <- year_month %>%
     dplyr::mutate(
-      Month_pad = stringr::str_pad(as.character(.data$months), width=2, pad="0"),
-      year_month = paste0(.data$years, .data$Month_pad)
+      Month_pad = stringr::str_pad(as.character(rlang::.data$months), width=2, pad="0"),
+      year_month = paste0(rlang::.data$years, rlang::.data$Month_pad)
     )
 
   # Base URLs for wind data
@@ -183,7 +177,7 @@ download_process_wind_data <- function(
 
         et <- raster::t(extracted)
         et2 <- as.data.frame(et)
-        et2$Date <- row.names(et2)
+       et2$Date <- row.names(et2)
 
         # Dynamically rename columns based on locations
         colnames(et2)[1:nrow(locations)] <- locations$Estuary
@@ -286,7 +280,7 @@ download_process_wind_data <- function(
   message("Calculating wind speed and direction...")
   uv_dat <- u_dat %>%
     dplyr::left_join(v_dat) %>%
-    dplyr::mutate(Date = ymd(str_remove(Date, pattern = "X")))
+    dplyr::mutate(Date = lubridate::ymd(stringr::str_remove(Date, pattern = "X")))
 
   # Write combined data
   message("Writing combined U and V data file...")
@@ -332,3 +326,11 @@ download_process_wind_data <- function(
 # names(rss) <- "cdd" ## not necessary
 # r1 <- terra::rast(rss,subds = "cdd") ## select the variable name
 # r <- r1[[1]] ## give me the first layer
+
+###  Just keeping in case this breaks - removed from top
+# #' @import lubridate dplyr stringr rWind devtools
+# #' @importFrom tidyr pivot_longer crossing
+# #' @importFrom data.table fwrite fread
+# #' @importFrom raster extract stack t
+# #' @importFrom sp SpatialPointsDataFrame CRS
+# #' @importFrom utils install.packages setTxtProgressBar txtProgressBar

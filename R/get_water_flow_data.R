@@ -16,7 +16,6 @@
 #' @returns Dataframe containing daily flow data
 #' @export
 #'
-#' @import lubridate dplyr stringr httr2 devtools purrr
 #'
 #' @examples
 #'# Example Usage
@@ -88,7 +87,7 @@ get_water_flow_data <- function(sites, date_start, date_end, token) {
 
   # Store results in a list
   results_list <- list()
-  results_list[[1]] <- purrr::map_df(results$records, ~as_tibble(.x))
+  results_list[[1]] <- purrr::map_df(results$records, ~dplyr::as_tibble(.x))
 
   # Get total pages
   total_pages <- results[["totalPages"]]
@@ -138,7 +137,7 @@ get_water_flow_data <- function(sites, date_start, date_end, token) {
 
   # Combine all results and format date
   full_result <- dplyr::bind_rows(results_list) %>%
-    mutate(Date = lubridate::dmy_hm(.data$timeStamp))
+    dplyr::mutate(Date = lubridate::dmy_hm(timeStamp))
 
   return(full_result)
 }

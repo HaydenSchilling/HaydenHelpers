@@ -18,10 +18,14 @@ Imports:
     lubridate,
     progress,
     httr2,
-    devtools,
     stringr,
     rWind,
     sp,
-    purrr
+    purrr,
+    DHARMa,
+    ggplot2,
+    stats,
+    patchwork,
+    rlang
 Suggests:
     keyring
