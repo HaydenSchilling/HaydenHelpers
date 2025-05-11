@@ -145,8 +145,8 @@ download_process_wind_data <- function(
 
   year_month <- year_month %>%
     dplyr::mutate(
-      Month_pad = stringr::str_pad(as.character(rlang::.data$months), width=2, pad="0"),
-      year_month = paste0(rlang::.data$years, rlang::.data$Month_pad)
+      Month_pad = stringr::str_pad(as.character(months), width=2, pad="0"),
+      year_month = paste0(years, Month_pad)
     )
 
   # Base URLs for wind data
