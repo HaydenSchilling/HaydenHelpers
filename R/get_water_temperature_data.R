@@ -126,7 +126,7 @@ get_water_temperature_data <- function(sites, date_start, date_end, token) {
     results <- perform_api %>% httr2::resp_body_json()
 
     # Add results to list
-    results_list[[i+1]] <- purrr::map_df(results$records, ~as_tibble(.x))
+    results_list[[i+1]] <- purrr::map_df(results$records, ~tibble::as_tibble(.x))
     i <- i + 1
 
     # Update progress bar
@@ -163,4 +163,4 @@ get_water_temperature_data <- function(sites, date_start, date_end, token) {
 # date_end <- "01-Jan-2024 00:00"
 #
 #
-# # function_test <- get_water_temperature_data(sites = sites, date_start = date_start, date_end = date_end, token = water_token)
+# # function_test <- get_water_temperature_data(sites = sites, date_start = date_start, date_end = date_end, token = token)

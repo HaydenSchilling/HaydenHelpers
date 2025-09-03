@@ -126,7 +126,7 @@ get_water_flow_data <- function(sites, date_start, date_end, token) {
     results <- perform_api %>% httr2::resp_body_json()
 
     # Add results to list
-    results_list[[i+1]] <- purrr::map_df(results$records, ~as_tibble(.x))
+    results_list[[i+1]] <- purrr::map_df(results$records, ~tibble::as_tibble(.x))
     i <- i + 1
 
     # Update progress bar
