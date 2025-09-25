@@ -91,7 +91,7 @@ DPIRD_flextable <- function(
     padding.left = pad_left, padding.right = pad_right
   )
   ft <- flextable::line_spacing(ft, part = "all", space = line_space) |>
-    fit_to_width(x, max_width, inc = 1L, max_iter = 20, unit = "cm")
+    fit_to_width(max_width, inc = 1L, max_iter = 20, unit = "cm")
 
   # Size to content first
   #ft <- flextable::autofit(ft)
