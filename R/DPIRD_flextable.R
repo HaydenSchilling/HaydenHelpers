@@ -12,8 +12,9 @@
 #' @param pad_left Cell padding (pts).
 #' @param pad_right Cell padding (pts).
 #' @param line_space Line spacing inside cells (1 = single).
-#' @param max_width Optional total table width to fit to (numeric). If NULL, no fit.
-#' @param unit Units for max_width ("in" or "cm").#' @usage DPIRD_flextable(df)
+#' @param max_width Maximum width to fit to (default 19). Use NULL to skip.
+#' @param unit Units for max_width ("cm" or "in").
+#' @param lock_width Logical; if TRUE, lock column widths (layout = "fixed").
 #' @return A formatted table
 #' @export
 #'
@@ -33,8 +34,6 @@
 #')
 #'ft_example
 
-#' @return A flextable object.
-#'
 DPIRD_flextable <- function(
     data,
     header_bg    = "#CBEDFD",
@@ -48,12 +47,20 @@ DPIRD_flextable <- function(
     pad_left     = 2,
     pad_right    = 2,
     line_space   = 0.9,
-    max_width    = NULL,
-    unit         = c("cm","in")
+    max_width    = 19,
+    unit         = c("cm", "in"),
+    lock_width   = FALSE
 ) {
   unit <- match.arg(unit)
 
-  # Build the table
+  # Allow tables/matrices as input
+  if (inherits(data, "table") || inherits(data, "ftable")) {
+    data <- as.data.frame(data)
+  } else if (is.matrix(data)) {
+    data <- as.data.frame(data, stringsAsFactors = FALSE)
+  }
+
+  # Build flextable
   ft <- flextable::flextable(data)
 
   # Header styling
@@ -62,7 +69,7 @@ DPIRD_flextable <- function(
     ft <- flextable::bold(ft, part = "header", bold = TRUE)
   }
 
-  # Number formatting (all numeric columns)
+  # Number formatting for all numeric columns
   num_cols <- names(Filter(is.numeric, data))
   if (length(num_cols) > 0) {
     ft <- flextable::colformat_num(
@@ -74,7 +81,7 @@ DPIRD_flextable <- function(
     )
   }
 
-  # Font + compact layout
+  # Font + compact spacing
   ft <- flextable::font(ft, part = "all", fontname = fontname)
   ft <- flextable::padding(
     ft, part = "all",
@@ -83,18 +90,21 @@ DPIRD_flextable <- function(
   )
   ft <- flextable::line_spacing(ft, part = "all", space = line_space)
 
-  # Let flextable size based on final content
+  # Size to content first
   ft <- flextable::autofit(ft)
 
-  # Optionally fit the entire table to a target width
+  # Cap to max width (shrinks only if needed)
   if (!is.null(max_width)) {
     ft <- flextable::fit_to_width(ft, max_width = max_width, unit = unit)
   }
 
+  # Toggle width locking for Word/PPT
+  ft <- flextable::set_table_properties(
+    ft,
+    layout = if (isTRUE(lock_width)) "fixed" else "autofit"
+  )
+
   ft
 }
-
-
-
 
 

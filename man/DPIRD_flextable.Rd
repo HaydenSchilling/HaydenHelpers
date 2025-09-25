@@ -17,8 +17,9 @@ DPIRD_flextable(
   pad_left = 2,
   pad_right = 2,
   line_space = 0.9,
-  max_width = NULL,
-  unit = c("cm", "in")
+  max_width = 19,
+  unit = c("cm", "in"),
+  lock_width = FALSE
 )
 }
 \arguments{
@@ -46,14 +47,14 @@ DPIRD_flextable(
 
 \item{line_space}{Line spacing inside cells (1 = single).}
 
-\item{max_width}{Optional total table width to fit to (numeric). If NULL, no fit.}
+\item{max_width}{Maximum width to fit to (default 19). Use NULL to skip.}
 
-\item{unit}{Units for max_width ("in" or "cm").#' @usage DPIRD_flextable(df)}
+\item{unit}{Units for max_width ("cm" or "in").}
+
+\item{lock_width}{Logical; if TRUE, lock column widths (layout = "fixed").}
 }
 \value{
 A formatted table
-
-A flextable object.
 }
 \description{
 Formats a flextable to match DPRID template
