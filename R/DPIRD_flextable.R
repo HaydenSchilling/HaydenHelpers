@@ -54,13 +54,15 @@ DPIRD_flextable <- function(
 
   # Allow tables/matrices as input
   if (inherits(data, "table") || inherits(data, "ftable")) {
-    data <- as.data.frame(data)
+    data <- as.data.frame(data)%>%
+      rename_all(~gsub("\\.", " ",.))
   } else if (is.matrix(data)) {
-    data <- as.data.frame(data, stringsAsFactors = FALSE)
+    data <- as.data.frame(data, stringsAsFactors = FALSE) %>%
+      rename_all(~gsub("\\.", " ",.))
   }
 
   # Build flextable
-  ft <- flextable::flextable(flextable::word_wrap(data, TRUE))
+  ft <- flextable::flextable(data)
 
   # Header styling
   ft <- flextable::bg(ft, part = "header", bg = header_bg)
@@ -94,5 +96,4 @@ DPIRD_flextable <- function(
 
   ft
 }
-
 
