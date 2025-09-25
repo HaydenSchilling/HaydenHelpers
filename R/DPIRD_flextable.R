@@ -94,7 +94,7 @@ DPIRD_flextable <- function(
     fit_to_width(max_width, inc = 1L, max_iter = 20, unit = "cm")
 
   # Size to content first
-  #ft <- flextable::autofit(ft)
+  ft <- flextable::autofit(ft)
 
   ft
 }
