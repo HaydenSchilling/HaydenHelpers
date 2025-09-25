@@ -14,7 +14,6 @@
 #' @param line_space Line spacing inside cells (1 = single).
 #' @param max_width Maximum width to fit to (default 19). Use NULL to skip.
 #' @param unit Units for max_width ("cm" or "in").
-#' @param lock_width Logical; if TRUE, lock column widths (layout = "fixed").
 #' @return A formatted table
 #' @export
 #'
@@ -61,7 +60,7 @@ DPIRD_flextable <- function(
   }
 
   # Build flextable
-  ft <- flextable::flextable(data)
+  ft <- flextable::flextable(flextable::word_wrap(data, TRUE))
 
   # Header styling
   ft <- flextable::bg(ft, part = "header", bg = header_bg)
@@ -92,17 +91,6 @@ DPIRD_flextable <- function(
 
   # Size to content first
   ft <- flextable::autofit(ft)
-
-  # Cap to max width (shrinks only if needed)
-  if (!is.null(max_width)) {
-    ft <- flextable::fit_to_width(ft, max_width = max_width, unit = unit)
-  }
-
-  # Toggle width locking for Word/PPT
-  ft <- flextable::set_table_properties(
-    ft,
-    layout = if (isTRUE(lock_width)) "fixed" else "autofit"
-  )
 
   ft
 }
