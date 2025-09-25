@@ -48,7 +48,6 @@ DPIRD_flextable <- function(
     line_space   = 0.9,
     max_width    = 17,
     unit         = c("cm", "in"),
-    lock_width   = FALSE
 ) {
   unit <- match.arg(unit)
 
@@ -91,7 +90,8 @@ DPIRD_flextable <- function(
     padding.top = pad_top, padding.bottom = pad_bottom,
     padding.left = pad_left, padding.right = pad_right
   )
-  ft <- flextable::line_spacing(ft, part = "all", space = line_space)
+  ft <- flextable::line_spacing(ft, part = "all", space = line_space) |>
+    fit_to_width(x, max_width, inc = 1L, max_iter = 20, unit = "cm")
 
   # Size to content first
   #ft <- flextable::autofit(ft)
