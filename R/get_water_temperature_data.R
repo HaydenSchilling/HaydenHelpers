@@ -87,7 +87,7 @@ get_water_temperature_data <- function(sites, date_start, date_end, token) {
 
   # Store results in a list
   results_list <- list()
-  results_list[[1]] <- purrr::map_df(results$records, ~as_tibble(.x))
+  results_list[[1]] <- purrr::map_df(results$records, ~tibble::as_tibble(.x))
 
   # Get total pages
   total_pages <- results[["totalPages"]]
@@ -136,8 +136,8 @@ get_water_temperature_data <- function(sites, date_start, date_end, token) {
   }
 
   # Combine all results and format date
-  full_result <- dplyr::bind_rows(results_list) %>%
-    mutate(Date = lubridate::dmy_hm(.data$timeStamp))
+  full_result <- dplyr::bind_rows(results_list)# %>%
+    #mutate(Date = lubridate::dmy_hm(.data$timeStamp))
 
   return(full_result)
 }
@@ -163,4 +163,4 @@ get_water_temperature_data <- function(sites, date_start, date_end, token) {
 # date_end <- "01-Jan-2024 00:00"
 #
 #
-# # function_test <- get_water_temperature_data(sites = sites, date_start = date_start, date_end = date_end, token = token)
+# function_test <- get_water_temperature_data(sites = sites, date_start = date_start, date_end = date_end, token = token)

@@ -26,6 +26,8 @@ Imports:
     ggplot2,
     stats,
     patchwork,
-    rlang
+    rlang,
+    flextable,
+    tibble
 Suggests:
     keyring

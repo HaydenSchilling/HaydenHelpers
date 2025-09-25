@@ -2,6 +2,7 @@
 
 export("%>%")
 export(DHARMa_ggplot)
+export(DPIRD_flextable)
 export(download_process_wind_data)
 export(get_water_flow_data)
 export(get_water_temperature_data)
