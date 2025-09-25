@@ -46,7 +46,7 @@ DPIRD_flextable <- function(
     pad_left     = 2,
     pad_right    = 2,
     line_space   = 0.9,
-    max_width    = 19,
+    max_width    = 17,
     unit         = c("cm", "in"),
     lock_width   = FALSE
 ) {
@@ -54,14 +54,16 @@ DPIRD_flextable <- function(
 
   # Allow tables/matrices as input
   if (inherits(data, "table") || inherits(data, "ftable")) {
-    data <- as.data.frame(data)%>%
-      rename_all(~gsub("\\.", " ",.))
+    data <- as.data.frame(data)
   } else if (is.matrix(data)) {
-    data <- as.data.frame(data, stringsAsFactors = FALSE) %>%
-      rename_all(~gsub("\\.", " ",.))
+    data <- as.data.frame(data, stringsAsFactors = FALSE)
   }
 
+  data <- data |>
+    dplyr::rename_all(~gsub("\\.", " ",.))
+
   # Build flextable
+
   ft <- flextable::flextable(data)
 
   # Header styling
@@ -92,7 +94,7 @@ DPIRD_flextable <- function(
   ft <- flextable::line_spacing(ft, part = "all", space = line_space)
 
   # Size to content first
-  ft <- flextable::autofit(ft)
+  #ft <- flextable::autofit(ft)
 
   ft
 }
