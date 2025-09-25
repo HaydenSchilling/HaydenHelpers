@@ -47,7 +47,7 @@ DPIRD_flextable <- function(
     pad_right    = 2,
     line_space   = 0.9,
     max_width    = 17,
-    unit         = c("cm", "in"),
+    unit         = c("cm", "in")
 ) {
   unit <- match.arg(unit)
 
