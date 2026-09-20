@@ -94,7 +94,7 @@ get_water_temperature_data <- function(sites, date_start, date_end, token) {
 
   # Process remaining pages if more than one page exists
   i <- 1
-
+  Sys.sleep(30)
   # Create progress bar if there are multiple pages
   if (total_pages > 1) {
     message(paste0("Retrieving data from ", total_pages, " pages..."))
